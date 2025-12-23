@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get update && apt-get install -y \
     git python3 python3-pip python3-venv \
-    libgl1 libglib2.0-0 ffmpeg \
+    libgl1 libglib2.0-0 ffmpeg curl \
  && rm -rf /var/lib/apt/lists/*
 
 # Install ComfyUI
@@ -29,4 +29,4 @@ RUN mkdir -p ${COMFY_DIR}/models ${COMFY_DIR}/output
 EXPOSE 8188
 WORKDIR ${COMFY_DIR}
 
-CMD ["python3", "main.py", "--listen", "0.0.0.0", "--port", "8188"]
+CMD ["python3", "-W", "ignore::SyntaxWarning", "main.py", "--listen", "0.0.0.0", "--port", "8188"]
