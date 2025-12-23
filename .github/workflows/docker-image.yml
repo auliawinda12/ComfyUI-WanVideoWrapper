@@ -1,0 +1,38 @@
+name: Build and Push Phantom Docker Image
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/wan-2gp
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t $IMAGE_NAME:latest .
+
+    - name: Push Docker image
+      run: |
+<<<<<<< HEAD
+        docker push $IMAGE_NAME:latest
+=======
+        docker push $IMAGE_NAME:latest
+>>>>>>> d341fc5bd29d8dea6f33b23ac6d476df413c5d89
